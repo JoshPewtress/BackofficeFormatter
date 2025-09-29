@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Text.RegularExpressions;
 
 namespace InboundFormatter
@@ -16,36 +17,46 @@ namespace InboundFormatter
         public static List<string> NormalizeInput(string input)
         {
             var output = new List<string>();
-            var splitLines = input.Split(new[ ] { "\r\n", "\n" }, StringSplitOptions.None);
+            var sb = new StringBuilder();
 
-            string currentLine = null;
+            int tabCount = 0;
 
-            foreach (var line in splitLines)
+            foreach (var c in input)
             {
-                var trimmedLine = line.Trim(new[ ] { '\"', ' ' });
-
-                if (Regex.IsMatch(trimmedLine, @"^(H|W\w|C\w)\d+"))
+                if (c == '\t')
                 {
-                    // Save previous Row if it exists
-                    if (!string.IsNullOrEmpty(currentLine))
-                    {
-                        output.Add(currentLine);
-                    }
-
-                    currentLine = trimmedLine;
+                    tabCount++;
+                    sb.Append(c);
                 }
-                else
+                else if (c == '\n')
                 {
-                    // Line had a newline in the SKU column
-                    if (!string.IsNullOrEmpty(currentLine))
+                    // Valid newline if we have seen at least 3 tab characters in this row
+                    if (tabCount >= 3)
                     {
-                        currentLine += "\t" + trimmedLine;
+                        output.Add(sb.ToString().Trim('\"', ' '));
+                        sb.Clear();
+                        tabCount = 0;
                     }
+                    else
+                    {
+                        // Invalid embedded \n character -> replace with space
+                        sb.Append(' ');
+                    }
+                }
+                else if (c == '\r')
+                {
+                    output.Add(sb.ToString().Trim('\"', ' '));
+                    sb.Clear();
+                    tabCount = 0;
+                }
+                else if (c != '\r')
+                {
+                    sb.Append(c);
                 }
             }
 
-            if (!string.IsNullOrEmpty(currentLine))
-                output.Add(currentLine);
+            if (sb.Length > 0)
+                output.Add(sb.ToString().Trim('\"', ' '));
 
             return output;
         }
@@ -81,7 +92,7 @@ namespace InboundFormatter
                     {
                         var trimmedWorkOrder = RemoveAdditionalOrderInformation(parts[ 1 ], OrderType.WorkOrder);
                         workOrder = Regex.Replace(trimmedWorkOrder, @"^[^\d]*", "");
-                        skuNumber = parts[ 2 ];
+                        skuNumber = parts[ 2 ].Trim('\"', ' ');
                     }
                 }
 
@@ -136,13 +147,13 @@ namespace InboundFormatter
         private static string TrimAfterLastHyphen(string value)
         {
             var extraHyphen = value.LastIndexOf('-');
-            return value.Substring(0, extraHyphen);
+            return value.Substring(0, extraHyphen).Trim('\"', ' ');
         }
 
         private static string TrimBeforeLastHyphen(string value)
         {
             var extraHyphen = value.LastIndexOf('-');
-            return value.Substring(extraHyphen + 1);
+            return value.Substring(extraHyphen + 1).Trim('\"', ' ');
         }
     }
 }

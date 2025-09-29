@@ -308,6 +308,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoSize = true;
             this.ClientSize = new System.Drawing.Size(700, 515);
             this.Controls.Add(this.resultsDataGrid);
             this.Controls.Add(this.submitButton);
