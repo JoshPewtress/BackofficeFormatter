@@ -1,0 +1,170 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Windows.Forms;
+
+namespace InboundFormatter
+{
+    public partial class Emails : Form
+    {
+        private readonly Selector _selector;
+
+        public Emails(Selector selector)
+        {
+            InitializeComponent();
+            _selector = selector;
+
+            this.StartPosition = FormStartPosition.Manual;
+
+            requestOtherRadioButton.Tag = requestOtherTextBox;
+            actionOtherRadioButton.Tag = actionOtherTextBox;
+
+            SetupPlaceholder(requestOtherTextBox, "Enabled when Other is selected. Enter reason here...");
+            SetupPlaceholder(actionOtherTextBox, "Enabled when Other is selected. Enter reason here...");
+
+            requestOtherRadioButton.CheckedChanged += OtherRadioButton_CheckedChanged;
+            actionOtherRadioButton.CheckedChanged += OtherRadioButton_CheckedChanged;
+
+            damageRadioButton.Tag = "Damaged";
+            lostRadioButton.Tag = "Lost In-Transit";
+            cancelRadioButton.Tag = "Customer Cancelled";
+
+            refundRadioButton.Tag = "Refund listed products";
+            resourceRadioButton.Tag = "Resource to new fulfilling location";
+        }
+
+        private void OtherRadioButton_CheckedChanged(object sender, EventArgs e)
+        {
+            if (sender is RadioButton radio && radio.Tag is TextBox linkedTextBox)
+            {
+                linkedTextBox.Enabled = radio.Checked;
+
+                if (!radio.Checked)
+                {
+                    linkedTextBox.ForeColor = System.Drawing.Color.Gray;
+                    linkedTextBox.Text = "Enabled when Other is selected. Enter reason here...";
+                }
+                else
+                {
+                    if (linkedTextBox.ForeColor == System.Drawing.Color.Gray)
+                    {
+                        linkedTextBox.Clear();
+                        linkedTextBox.ForeColor = System.Drawing.Color.Black;
+                    }
+                }
+            }
+        }
+
+        private void SetupPlaceholder(TextBox textBox, string placeholder)
+        {
+            textBox.Text = placeholder;
+            textBox.ForeColor = System.Drawing.Color.Gray;
+            textBox.Enabled = false;
+        }
+
+        private void RemovePlaceholder(object sender, EventArgs e)
+        {
+            var tb = sender as TextBox;
+            if (tb != null && tb.ForeColor == System.Drawing.Color.Gray)
+            {
+                tb.Text = "";
+                tb.ForeColor = System.Drawing.Color.Black;
+            }
+        }
+
+        private void AddPlaceholder(object sender, EventArgs e)
+        {
+            var tb = sender as TextBox;
+            if (tb != null && string.IsNullOrWhiteSpace(tb.Text))
+            {
+                tb.Text = "Enabled when Other is selected. Enter reason here...";
+                tb.ForeColor = System.Drawing.Color.Gray;
+            }
+        }
+
+        private RadioButton GetCheckedRadioButton(Control parent)
+        {
+            foreach (Control ctrl in parent.Controls)
+            {
+                if (ctrl is RadioButton rb && rb.Checked)
+                    return rb;
+
+                var found = GetCheckedRadioButton(ctrl);
+                if (found != null)
+                    return found;
+            }
+            return null;
+        }
+
+        private void OnClose(object sender, FormClosedEventArgs e)
+        {
+            _selector.StartPosition = FormStartPosition.Manual;
+            _selector.Location = this.Location;
+
+            _selector.Show();
+        }
+
+        private void submitButton_Click(object sender, EventArgs e)
+        {
+            var submittedLines = EmailHelper.NormalizeInput(inputTextBox.Text);
+            var requestOrders = EmailHelper.ProcessEmail(submittedLines);
+            resultsDataGrid.DataSource = BuildDataTable(requestOrders);
+            ClearOtherTextBoxes();
+        }
+
+        private DataTable BuildDataTable(Dictionary<string, (HashSet<string> WorkOrders, HashSet<string> Sku)> orders)
+        {
+            var output = new DataTable();
+
+            output.Columns.Add("Order Numbers");
+            output.Columns.Add("Work Orders");
+            output.Columns.Add("Skus");
+
+            var requestRb = GetCheckedRadioButton(requestGroup);
+            var actionRb = GetCheckedRadioButton(actionGroup);
+
+            string requestText = "";
+            string actionText = "";
+
+            if (requestRb != null)
+            {
+                if (requestRb == requestOtherRadioButton)
+                    requestText = requestOtherTextBox.Text;
+                else
+                    requestText = requestRb.Tag?.ToString();
+            }
+
+            if (actionRb != null)
+            {
+                if (actionRb == actionOtherRadioButton)
+                    actionText = actionOtherTextBox.Text;
+                else
+                    actionText = actionRb.Tag?.ToString();
+            }
+
+            foreach (var keyValuePair in orders)
+            {
+                var skuString = string.Join(", ", keyValuePair.Value.Sku);
+
+                if (!string.IsNullOrWhiteSpace(requestText))
+                    skuString += $", {requestText}";
+                if (!string.IsNullOrWhiteSpace(actionText))
+                    skuString += $". {actionText}.";
+
+                output.Rows.Add(
+                    keyValuePair.Key,
+                    string.Join(", ", keyValuePair.Value.WorkOrders),
+                    skuString
+                );
+            }
+
+            return output;
+        }
+
+        private void ClearOtherTextBoxes()
+        {
+            requestOtherTextBox.Clear();
+            actionOtherTextBox.Clear();
+        }
+    }
+}

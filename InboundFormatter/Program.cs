@@ -16,7 +16,7 @@ namespace InboundFormatter
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new InboundFormatter());
+            Application.Run(new Selector());
         }
     }
 }

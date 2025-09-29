@@ -75,6 +75,19 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Crossdocks.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Crossdocks.Designer.cs">
+      <DependentUpon>Crossdocks.cs</DependentUpon>
+    </Compile>
+    <Compile Include="EmailHelper.cs" />
+    <Compile Include="Emails.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Emails.Designer.cs">
+      <DependentUpon>Emails.cs</DependentUpon>
+    </Compile>
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -89,6 +102,12 @@
     <Compile Include="Selector.Designer.cs">
       <DependentUpon>Selector.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="Crossdocks.resx">
+      <DependentUpon>Crossdocks.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Emails.resx">
+      <DependentUpon>Emails.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
@@ -101,6 +120,9 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="Selector.resx">
+      <DependentUpon>Selector.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="InboundFormatter_TemporaryKey.pfx" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
