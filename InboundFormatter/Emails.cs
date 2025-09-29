@@ -5,9 +5,11 @@ using System.Windows.Forms;
 
 namespace InboundFormatter
 {
+
     public partial class Emails : Form
     {
         private readonly Selector _selector;
+        private ToolTip toolTip = new ToolTip();
 
         public Emails(Selector selector)
         {
@@ -31,6 +33,14 @@ namespace InboundFormatter
 
             refundRadioButton.Tag = "Refund listed products";
             resourceRadioButton.Tag = "Resource to new fulfilling location";
+
+            toolTip.AutoPopDelay = 5000;
+            toolTip.InitialDelay = 200;
+            toolTip.ReshowDelay = 100;
+            toolTip.ShowAlways = true;
+
+            toolTip.SetToolTip(submitButton, "Accepted Formats for Formrouters:\nOrder|Work order|Sku\nOrder|Work order|Sku|Quantity\n\n" +
+                "Accepted Formats for 3PL:\nOrder");
         }
 
         private void OtherRadioButton_CheckedChanged(object sender, EventArgs e)
