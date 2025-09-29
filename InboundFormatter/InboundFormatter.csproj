@@ -81,7 +81,8 @@
     <Compile Include="Crossdocks.Designer.cs">
       <DependentUpon>Crossdocks.cs</DependentUpon>
     </Compile>
-    <Compile Include="EmailHelper.cs" />
+    <Compile Include="Helpers\CrossdockHelper.cs" />
+    <Compile Include="Helpers\EmailHelper.cs" />
     <Compile Include="Emails.cs">
       <SubType>Form</SubType>
     </Compile>
