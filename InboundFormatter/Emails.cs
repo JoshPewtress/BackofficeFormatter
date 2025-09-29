@@ -21,11 +21,16 @@ namespace InboundFormatter
             requestOtherRadioButton.Tag = requestOtherTextBox;
             actionOtherRadioButton.Tag = actionOtherTextBox;
 
-            SetupPlaceholder(requestOtherTextBox, "Enabled when Other is selected. Enter reason here...");
-            SetupPlaceholder(actionOtherTextBox, "Enabled when Other is selected. Enter reason here...");
+            SetupPlaceholder(requestOtherTextBox, "Enabled when Other is selected. Enter reason here...", false);
+            SetupPlaceholder(actionOtherTextBox, "Enabled when Other is selected. Enter reason here...", false);
+            SetupPlaceholder(storeNumberTextBox, "Store #", true);
 
             requestOtherRadioButton.CheckedChanged += OtherRadioButton_CheckedChanged;
             actionOtherRadioButton.CheckedChanged += OtherRadioButton_CheckedChanged;
+
+            requestOtherTextBox.Tag = "Enabled when Other is selected. Enter reason here...";
+            actionOtherTextBox.Tag = "Enabled when Other is selected. Enter reason here...";
+            storeNumberTextBox.Tag = "Store #";
 
             damageRadioButton.Tag = "Damaged";
             lostRadioButton.Tag = "Lost In-Transit";
@@ -65,11 +70,14 @@ namespace InboundFormatter
             }
         }
 
-        private void SetupPlaceholder(TextBox textBox, string placeholder)
+        private void SetupPlaceholder(TextBox textBox, string placeholder, bool enabled)
         {
             textBox.Text = placeholder;
             textBox.ForeColor = System.Drawing.Color.Gray;
-            textBox.Enabled = false;
+            if (enabled)
+                textBox.Enabled = true;
+            else
+                textBox.Enabled = false;
         }
 
         private void RemovePlaceholder(object sender, EventArgs e)
@@ -87,7 +95,7 @@ namespace InboundFormatter
             var tb = sender as TextBox;
             if (tb != null && string.IsNullOrWhiteSpace(tb.Text))
             {
-                tb.Text = "Enabled when Other is selected. Enter reason here...";
+                tb.Text = tb.Tag.ToString();
                 tb.ForeColor = System.Drawing.Color.Gray;
             }
         }
@@ -126,9 +134,12 @@ namespace InboundFormatter
         {
             var output = new DataTable();
 
+            output.Columns.Add("Store");
             output.Columns.Add("Order Numbers");
             output.Columns.Add("Work Orders");
             output.Columns.Add("Skus");
+
+            var storeNumber = "";
 
             var requestRb = GetCheckedRadioButton(requestGroup);
             var actionRb = GetCheckedRadioButton(actionGroup);
@@ -152,6 +163,11 @@ namespace InboundFormatter
                     actionText = actionRb.Tag?.ToString();
             }
 
+            if (storeNumberTextBox.Text.Length == 4)
+            {
+                storeNumber = storeNumberTextBox.Text;
+            }
+
             foreach (var keyValuePair in orders)
             {
                 var skuString = string.Join(", ", keyValuePair.Value.Sku);
@@ -162,6 +178,7 @@ namespace InboundFormatter
                     skuString += $". {actionText}.";
 
                 output.Rows.Add(
+                    storeNumber,
                     keyValuePair.Key,
                     string.Join(", ", keyValuePair.Value.WorkOrders),
                     skuString
@@ -175,6 +192,7 @@ namespace InboundFormatter
         {
             requestOtherTextBox.Clear();
             actionOtherTextBox.Clear();
+            storeNumberTextBox.Clear();
         }
     }
 }

@@ -44,11 +44,14 @@
             this.actionOtherTextBox = new System.Windows.Forms.TextBox();
             this.submitButton = new System.Windows.Forms.Button();
             this.resultsDataGrid = new System.Windows.Forms.DataGridView();
+            this.submitLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
+            this.storeNumberTextBox = new System.Windows.Forms.TextBox();
             this.requestGroup.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             this.actionGroup.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.resultsDataGrid)).BeginInit();
+            this.submitLayoutPanel.SuspendLayout();
             this.SuspendLayout();
             // 
             // inputTextBox
@@ -107,7 +110,7 @@
             this.damageRadioButton.Location = new System.Drawing.Point(3, 3);
             this.damageRadioButton.Name = "damageRadioButton";
             this.damageRadioButton.Size = new System.Drawing.Size(167, 44);
-            this.damageRadioButton.TabIndex = 1;
+            this.damageRadioButton.TabIndex = 0;
             this.damageRadioButton.TabStop = true;
             this.damageRadioButton.Text = "Damaged";
             this.damageRadioButton.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -126,7 +129,7 @@
             this.lostRadioButton.Location = new System.Drawing.Point(176, 3);
             this.lostRadioButton.Name = "lostRadioButton";
             this.lostRadioButton.Size = new System.Drawing.Size(167, 44);
-            this.lostRadioButton.TabIndex = 2;
+            this.lostRadioButton.TabIndex = 1;
             this.lostRadioButton.TabStop = true;
             this.lostRadioButton.Text = "Lost In-Transit";
             this.lostRadioButton.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -145,7 +148,7 @@
             this.requestOtherRadioButton.Location = new System.Drawing.Point(522, 3);
             this.requestOtherRadioButton.Name = "requestOtherRadioButton";
             this.requestOtherRadioButton.Size = new System.Drawing.Size(169, 44);
-            this.requestOtherRadioButton.TabIndex = 4;
+            this.requestOtherRadioButton.TabIndex = 3;
             this.requestOtherRadioButton.TabStop = true;
             this.requestOtherRadioButton.Text = "Other";
             this.requestOtherRadioButton.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -164,7 +167,7 @@
             this.cancelRadioButton.Location = new System.Drawing.Point(349, 3);
             this.cancelRadioButton.Name = "cancelRadioButton";
             this.cancelRadioButton.Size = new System.Drawing.Size(167, 44);
-            this.cancelRadioButton.TabIndex = 3;
+            this.cancelRadioButton.TabIndex = 2;
             this.cancelRadioButton.TabStop = true;
             this.cancelRadioButton.Text = "Customer Cancel";
             this.cancelRadioButton.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -177,7 +180,7 @@
             this.requestOtherTextBox.Location = new System.Drawing.Point(0, 222);
             this.requestOtherTextBox.Name = "requestOtherTextBox";
             this.requestOtherTextBox.Size = new System.Drawing.Size(700, 22);
-            this.requestOtherTextBox.TabIndex = 5;
+            this.requestOtherTextBox.TabIndex = 3;
             this.requestOtherTextBox.Enter += new System.EventHandler(this.RemovePlaceholder);
             this.requestOtherTextBox.Leave += new System.EventHandler(this.AddPlaceholder);
             // 
@@ -188,7 +191,7 @@
             this.actionGroup.Location = new System.Drawing.Point(0, 244);
             this.actionGroup.Name = "actionGroup";
             this.actionGroup.Size = new System.Drawing.Size(700, 69);
-            this.actionGroup.TabIndex = 5;
+            this.actionGroup.TabIndex = 4;
             this.actionGroup.TabStop = false;
             this.actionGroup.Text = "Action Needed";
             // 
@@ -198,6 +201,10 @@
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33334F));
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33334F));
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33334F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanel2.Controls.Add(this.actionOtherRadioButton, 2, 0);
             this.tableLayoutPanel2.Controls.Add(this.resourceRadioButton, 1, 0);
             this.tableLayoutPanel2.Controls.Add(this.refundRadioButton, 0, 0);
@@ -208,7 +215,7 @@
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 50F));
             this.tableLayoutPanel2.Size = new System.Drawing.Size(694, 50);
-            this.tableLayoutPanel2.TabIndex = 0;
+            this.tableLayoutPanel2.TabIndex = 5;
             // 
             // actionOtherRadioButton
             // 
@@ -222,7 +229,7 @@
             this.actionOtherRadioButton.Location = new System.Drawing.Point(465, 3);
             this.actionOtherRadioButton.Name = "actionOtherRadioButton";
             this.actionOtherRadioButton.Size = new System.Drawing.Size(226, 44);
-            this.actionOtherRadioButton.TabIndex = 8;
+            this.actionOtherRadioButton.TabIndex = 2;
             this.actionOtherRadioButton.TabStop = true;
             this.actionOtherRadioButton.Text = "Other";
             this.actionOtherRadioButton.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -240,7 +247,7 @@
             this.resourceRadioButton.Location = new System.Drawing.Point(234, 3);
             this.resourceRadioButton.Name = "resourceRadioButton";
             this.resourceRadioButton.Size = new System.Drawing.Size(225, 44);
-            this.resourceRadioButton.TabIndex = 7;
+            this.resourceRadioButton.TabIndex = 1;
             this.resourceRadioButton.TabStop = true;
             this.resourceRadioButton.Text = "Resource";
             this.resourceRadioButton.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -259,7 +266,7 @@
             this.refundRadioButton.Location = new System.Drawing.Point(3, 3);
             this.refundRadioButton.Name = "refundRadioButton";
             this.refundRadioButton.Size = new System.Drawing.Size(225, 44);
-            this.refundRadioButton.TabIndex = 6;
+            this.refundRadioButton.TabIndex = 0;
             this.refundRadioButton.TabStop = true;
             this.refundRadioButton.Text = "Refund";
             this.refundRadioButton.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -272,21 +279,20 @@
             this.actionOtherTextBox.Location = new System.Drawing.Point(0, 313);
             this.actionOtherTextBox.Name = "actionOtherTextBox";
             this.actionOtherTextBox.Size = new System.Drawing.Size(700, 22);
-            this.actionOtherTextBox.TabIndex = 9;
+            this.actionOtherTextBox.TabIndex = 6;
             this.actionOtherTextBox.Enter += new System.EventHandler(this.RemovePlaceholder);
             this.actionOtherTextBox.Leave += new System.EventHandler(this.AddPlaceholder);
             // 
             // submitButton
             // 
             this.submitButton.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.submitButton.Dock = System.Windows.Forms.DockStyle.Top;
+            this.submitButton.Dock = System.Windows.Forms.DockStyle.Fill;
             this.submitButton.FlatAppearance.BorderSize = 2;
             this.submitButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.submitButton.Location = new System.Drawing.Point(0, 335);
-            this.submitButton.Margin = new System.Windows.Forms.Padding(10, 5, 5, 10);
+            this.submitButton.Location = new System.Drawing.Point(108, 3);
             this.submitButton.Name = "submitButton";
-            this.submitButton.Size = new System.Drawing.Size(700, 36);
-            this.submitButton.TabIndex = 10;
+            this.submitButton.Size = new System.Drawing.Size(589, 32);
+            this.submitButton.TabIndex = 8;
             this.submitButton.Text = "Submit";
             this.submitButton.UseVisualStyleBackColor = true;
             this.submitButton.Click += new System.EventHandler(this.submitButton_Click);
@@ -296,13 +302,42 @@
             this.resultsDataGrid.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
             this.resultsDataGrid.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllHeaders;
             this.resultsDataGrid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.resultsDataGrid.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.resultsDataGrid.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.resultsDataGrid.Location = new System.Drawing.Point(0, 371);
             this.resultsDataGrid.MinimumSize = new System.Drawing.Size(650, 0);
             this.resultsDataGrid.Name = "resultsDataGrid";
             this.resultsDataGrid.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToDisplayedHeaders;
             this.resultsDataGrid.Size = new System.Drawing.Size(700, 144);
             this.resultsDataGrid.TabIndex = 11;
+            this.resultsDataGrid.TabStop = false;
+            // 
+            // submitLayoutPanel
+            // 
+            this.submitLayoutPanel.ColumnCount = 2;
+            this.submitLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 15F));
+            this.submitLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 85F));
+            this.submitLayoutPanel.Controls.Add(this.submitButton, 1, 0);
+            this.submitLayoutPanel.Controls.Add(this.storeNumberTextBox, 0, 0);
+            this.submitLayoutPanel.Dock = System.Windows.Forms.DockStyle.Top;
+            this.submitLayoutPanel.Location = new System.Drawing.Point(0, 335);
+            this.submitLayoutPanel.Name = "submitLayoutPanel";
+            this.submitLayoutPanel.RowCount = 1;
+            this.submitLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.submitLayoutPanel.Size = new System.Drawing.Size(700, 38);
+            this.submitLayoutPanel.TabIndex = 12;
+            // 
+            // storeNumberTextBox
+            // 
+            this.storeNumberTextBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.storeNumberTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.storeNumberTextBox.Location = new System.Drawing.Point(3, 3);
+            this.storeNumberTextBox.Multiline = true;
+            this.storeNumberTextBox.Name = "storeNumberTextBox";
+            this.storeNumberTextBox.Size = new System.Drawing.Size(99, 32);
+            this.storeNumberTextBox.TabIndex = 7;
+            this.storeNumberTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.storeNumberTextBox.Enter += new System.EventHandler(this.RemovePlaceholder);
+            this.storeNumberTextBox.Leave += new System.EventHandler(this.AddPlaceholder);
             // 
             // Emails
             // 
@@ -310,8 +345,8 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
             this.ClientSize = new System.Drawing.Size(700, 515);
+            this.Controls.Add(this.submitLayoutPanel);
             this.Controls.Add(this.resultsDataGrid);
-            this.Controls.Add(this.submitButton);
             this.Controls.Add(this.actionOtherTextBox);
             this.Controls.Add(this.actionGroup);
             this.Controls.Add(this.requestOtherTextBox);
@@ -327,6 +362,8 @@
             this.tableLayoutPanel2.ResumeLayout(false);
             this.tableLayoutPanel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.resultsDataGrid)).EndInit();
+            this.submitLayoutPanel.ResumeLayout(false);
+            this.submitLayoutPanel.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -350,5 +387,7 @@
         private System.Windows.Forms.TextBox actionOtherTextBox;
         private System.Windows.Forms.Button submitButton;
         private System.Windows.Forms.DataGridView resultsDataGrid;
+        private System.Windows.Forms.TableLayoutPanel submitLayoutPanel;
+        private System.Windows.Forms.TextBox storeNumberTextBox;
     }
 }
