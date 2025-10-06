@@ -20,11 +20,17 @@ namespace InboundFormatter
             var sb = new StringBuilder();
 
             int tabCount = 0;
+            char previousChar = '\0';
 
             foreach (var c in input)
             {
                 if (c == '\t')
                 {
+                    if (previousChar == '\t')
+                    {
+                        tabCount++;
+                    }
+
                     tabCount++;
                     sb.Append(c);
                 }
@@ -53,6 +59,8 @@ namespace InboundFormatter
                 {
                     sb.Append(c);
                 }
+
+                previousChar = c;
             }
 
             if (sb.Length > 0)
@@ -68,6 +76,10 @@ namespace InboundFormatter
             foreach (var line in lines)
             {
                 var parts = line.Split('\t');
+
+                // Remove null rows caused by invalid \n characters
+                if (line == "")
+                    continue;
 
                 // Collapse 4 column rows (with quantity in 4th col) into a 3-column format
                 if (parts.Length == 4 && int.TryParse(parts[ 3 ].Trim(), out _))
@@ -92,6 +104,11 @@ namespace InboundFormatter
                     {
                         var trimmedWorkOrder = RemoveAdditionalOrderInformation(parts[ 1 ], OrderType.WorkOrder);
                         workOrder = Regex.Replace(trimmedWorkOrder, @"^[^\d]*", "");
+                        skuNumber = parts[ 2 ].Trim('\"', ' ');
+                    }
+
+                    if (string.IsNullOrWhiteSpace(parts[1]) && parts[2].Length > 0)
+                    {
                         skuNumber = parts[ 2 ].Trim('\"', ' ');
                     }
                 }
