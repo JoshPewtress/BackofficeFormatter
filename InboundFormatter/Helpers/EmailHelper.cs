@@ -158,7 +158,7 @@ namespace InboundFormatter
                     }
                     break;
             }
-            return value;
+            return value.Trim('\"', ' ');
         }
 
         private static string TrimAfterLastHyphen(string value)
